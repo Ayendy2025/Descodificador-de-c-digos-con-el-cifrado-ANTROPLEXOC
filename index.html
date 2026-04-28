@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>App Código Secreto</title>
+
+<style>
+body {
+  font-family: -apple-system, BlinkMacSystemFont;
+  background: linear-gradient(180deg, #0a0a0a, #111);
+  color: #ffffff;
+  text-align: center;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 26px;
+  margin-bottom: 10px;
+}
+
+input {
+  width: 95%;
+  padding: 15px;
+  font-size: 20px;
+  border-radius: 12px;
+  border: none;
+  margin-top: 20px;
+  text-align: center;
+  outline: none;
+}
+
+button {
+  width: 45%;
+  padding: 15px;
+  margin: 10px 5px;
+  font-size: 18px;
+  border-radius: 12px;
+  border: none;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+button:active {
+  transform: scale(0.95);
+  opacity: 0.8;
+}
+
+.codificar {
+  background: #00c853;
+  color: white;
+}
+
+.decodificar {
+  background: #2962ff;
+  color: white;
+}
+
+.limpiar {
+  background: #ff3b30;
+  color: white;
+  width: 92%;
+}
+
+.resultado {
+  margin-top: 30px;
+  font-size: 28px;
+  color: #00ffcc;
+  word-wrap: break-word;
+  min-height: 40px;
+}
+
+/* Botón copiar */
+.copiar {
+  margin-top: 15px;
+  background: #444;
+  width: 92%;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🔐 Traductor ANTROPLEXOC</h1>
+
+<input type="text" id="input" placeholder="Escribe número o código">
+
+<div>
+  <button class="codificar" onclick="codificar()">Codificar</button>
+  <button class="decodificar" onclick="decodificar()">Decodificar</button>
+</div>
+
+<button class="limpiar" onclick="limpiar()">Limpiar</button>
+<button class="copiar" onclick="copiar()">Copiar resultado</button>
+
+<div class="resultado" id="resultado"></div>
+
+<script>
+const mapa = {
+ '1':'A','2':'N','3':'T','4':'R','5':'O',
+ '6':'P','7':'L','8':'E','9':'X','0':'C'
+};
+
+const mapaInv = {};
+for (let k in mapa) {
+  mapaInv[mapa[k]] = k;
+}
+
+function codificar() {
+ let val = document.getElementById("input").value.trim();
+ let res = "";
+ for (let c of val) {
+   res += mapa[c] || c;
+ }
+ document.getElementById("resultado").innerText = res;
+}
+
+function decodificar() {
+ let val = document.getElementById("input").value.toUpperCase().trim();
+ let res = "";
+ for (let c of val) {
+   res += mapaInv[c] || c;
+ }
+ document.getElementById("resultado").innerText = res;
+}
+
+function limpiar() {
+ document.getElementById("input").value = "";
+ document.getElementById("resultado").innerText = "";
+}
+
+function copiar() {
+ let texto = document.getElementById("resultado").innerText;
+ if (!texto) return;
+ navigator.clipboard.writeText(texto);
+ alert("Copiado 🔥");
+}
+</script>
+
+</body>
+</html>
